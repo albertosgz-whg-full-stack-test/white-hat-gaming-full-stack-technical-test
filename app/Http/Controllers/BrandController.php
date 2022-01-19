@@ -27,6 +27,11 @@ class BrandController extends Controller
             ->whereNotNull('game.launchcode')
             ->groupBy('brands.id');
 
+        $filter = $request->get('filter');
+        if ($filter) {
+            $query->where('brands.brand', 'like', "%{$filter}%");
+        }
+
         return new BrandCollection($query->simplePaginate(10));
     }
 }

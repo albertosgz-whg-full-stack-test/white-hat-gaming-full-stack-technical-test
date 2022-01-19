@@ -22,6 +22,11 @@ class CategoryController extends Controller
             ->join('game', 'brand_games.launchcode', '=', 'game.launchcode')
             ->distinct();
 
+        $filter = $request->get('filter');
+        if ($filter) {
+            $query->where('brand_games.category', 'like', "%{$filter}%");
+        }
+
         return new CategoryCollection($query->simplePaginate(10));
 
     }

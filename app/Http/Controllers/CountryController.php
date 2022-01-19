@@ -22,6 +22,11 @@ class CountryController extends Controller
                 'countries.country',
             ]);
 
+        $filter = $request->get('filter');
+        if ($filter) {
+            $query->where('country', 'like', "%{$filter}%");
+        }
+
         return new CountryCollection($query->simplePaginate(10));
 
     }
