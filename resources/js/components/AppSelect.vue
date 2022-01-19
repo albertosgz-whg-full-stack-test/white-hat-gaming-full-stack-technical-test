@@ -1,11 +1,13 @@
 <template>
     <multiselect
         v-model="model"
-        :options="optionsToDisplay"
+        :options="options"
         :placeholder="placeholder"
         :loading="loading"
         :allow-empty="allowEmpty"
         :preserve-search="true"
+        track-by="id"
+        label="name"
         @search-change="onSearch"
     >
         <template #afterList>
@@ -17,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, PropType} from "vue";
 import axios from "axios";
 import Multiselect from 'vue-multiselect';
 
@@ -33,7 +35,7 @@ export default defineComponent({
     },
     props: {
         modelValue: {
-            type: [Number,String],
+            type: Object as PropType<SelectOption>,
         },
         endpoint: {
             type: String,
@@ -62,16 +64,12 @@ export default defineComponent({
     },
     computed: {
         model: {
-            get(): string|undefined {
-                return this.options.find(option => (option.id || option.name) === this.modelValue)?.name;
+            get(): SelectOption {
+                return this.options.find(option => option.id === this.modelValue?.id);
             },
-            set(value: string) {
-                const optionSelected = this.options.find(option => option.name === value);
-                this.$emit('update:modelValue', optionSelected?.id || optionSelected?.name);
+            set(value: SelectOption) {
+                this.$emit('update:modelValue', value);
             }
-        },
-        optionsToDisplay(): string[] {
-            return this.options.map(option => option.name);
         },
     },
     methods: {
@@ -84,7 +82,10 @@ export default defineComponent({
             const response = await axios.get(query) as any;
             this.options = [
                 ...this.options,
-                ...response.data.data,
+                ...response.data.data.map(option => ({
+                    ...option,
+                    id: option.id || option.name,
+                })),
             ];
             this.loading = false;
         },
@@ -102,7 +103,7 @@ export default defineComponent({
         await this.fillData();
         if (this.setupInitialValue) {
             const firstOption = this.options[0];
-            this.$emit('update:modelValue', firstOption?.id || firstOption?.name);
+            this.$emit('update:modelValue', firstOption);
         }
     },
 })

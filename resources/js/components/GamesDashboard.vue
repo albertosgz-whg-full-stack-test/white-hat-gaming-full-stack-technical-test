@@ -4,7 +4,7 @@
             <div class="selects row">
                 <div class="col-4">
                     <app-select
-                        v-model="brand_id"
+                        v-model="brand"
                         endpoint="/api/brands"
                         placeholder="Select brand"
                         setup-initial-value
@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-4">
                     <app-select
-                        v-model="country_id"
+                        v-model="country"
                         endpoint="/api/countries"
                         placeholder="Select country"
                         setup-initial-value
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-4">
                     <app-select
-                        v-model="category_id"
+                        v-model="category"
                         endpoint="/api/categories"
                         placeholder="Select category"
                         allow-empty
@@ -58,6 +58,9 @@
                     <el-descriptions-item label="Launchcode" :span="4">{{ gameInDialog?.launchcode }}</el-descriptions-item>
 <!--                    <el-descriptions-item label="Brand">{{ brandSelected?.name }}</el-descriptions-item>-->
                     <el-descriptions-item label="Provider" :span="4" v-loading="loadingProvider">{{ providerSelected }}</el-descriptions-item>
+                    <el-descriptions-item label="Brand" :span="2">{{ brand?.name }}</el-descriptions-item>
+                    <el-descriptions-item label="Country" :span="2">{{ country?.name }}</el-descriptions-item>
+                    <el-descriptions-item v-if="category" label="Category" :span="5">{{ category?.name }}</el-descriptions-item>
                     <el-descriptions-item label="New?">{{ gameInDialog?.new ? 'Yes' : 'No' }}</el-descriptions-item>
                     <el-descriptions-item label="Hot?">{{ gameInDialog?.hot ? 'Yes' : 'No' }}</el-descriptions-item>
                     <el-descriptions-item label="RTP" :span="2">{{ gameInDialog?.rtp }}</el-descriptions-item>
@@ -81,7 +84,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import AppSelect from "./AppSelect.vue";
+import AppSelect, {SelectOption} from "./AppSelect.vue";
 import axios from "axios";
 
 export default defineComponent({
@@ -91,9 +94,9 @@ export default defineComponent({
     },
     data() {
         return {
-            brand_id: undefined as undefined|number,
-            country_id: undefined as undefined|number,
-            category_id: undefined as undefined|number,
+            brand: undefined as undefined|SelectOption,
+            country: undefined as undefined|SelectOption,
+            category: undefined as undefined|SelectOption,
             loading: true,
             page: 0,
             games: [] as Game[],
@@ -118,12 +121,12 @@ export default defineComponent({
             this.gameInDialog = game;
         },
         async fillData() {
-            if (this.brand_id && this.country_id) {
+            if (this.brand && this.country) {
                 this.loading = true;
                 this.page++;
-                let query = `/api/games?page=${this.page}&brand_id=${this.brand_id}&country_id=${this.country_id}`;
-                if (this.category_id) {
-                    query += `&category_id=${this.category_id}`;
+                let query = `/api/games?page=${this.page}&brand_id=${this.brand?.id}&country_id=${this.country?.id}`;
+                if (this.category) {
+                    query += `&category_id=${this.category.id}`;
                 }
                 const response = await axios.get(query) as any;
                 this.games = [
@@ -140,23 +143,22 @@ export default defineComponent({
             const response = await axios.get(query) as any;
             this.providerSelected = response.data.data.name;
             this.loadingProvider = false;
-        }
+        },
+        async restartData() {
+            this.page = 0;
+            this.games = [];
+            await this.fillData();
+        },
     },
     watch: {
-        async brand_id() {
-            this.page = 0;
-            this.games = [];
-            await this.fillData();
+        async brand() {
+            await this.restartData();
         },
-        async country_id() {
-            this.page = 0;
-            this.games = [];
-            await this.fillData();
+        async country() {
+            await this.restartData();
         },
-        async category_id() {
-            this.page = 0;
-            this.games = [];
-            await this.fillData();
+        async category() {
+            await this.restartData();
         },
     }
 })
