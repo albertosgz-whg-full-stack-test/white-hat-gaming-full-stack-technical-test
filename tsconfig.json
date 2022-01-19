@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "target": "es5",
+        "module": "es2020",
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "strict": false,                 // Enable strict type-checking options
+        "skipLibCheck": true,           // Skip type checking of declaration files
+        "noImplicitAny": false          // Bypass raising errors on `any` type
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": ["resources/js/**/*"]  // Frontend paths pattern
+}
