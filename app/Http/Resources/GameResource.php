@@ -18,7 +18,7 @@ class GameResource extends JsonResource
             'launchcode' => $this->launchcode,
             'name' => $this->name,
             'game_provider_id' => $this->game_provider_id,
-            'rtp' => $this->rtp,
+            'rtp' => (float) $this->rtp,
             'brand_id' => $this->brandid,
             'category' => $this->category,
             'hot' => (bool) $this->hot,
