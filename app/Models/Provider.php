@@ -11,6 +11,7 @@ class Provider extends Model
     use HasFactory;
 
     protected $table = 'game_providers';
+    public $timestamps = false;
 
     /**
      * @return HasMany
