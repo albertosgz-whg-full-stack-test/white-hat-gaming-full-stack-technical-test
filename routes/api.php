@@ -18,8 +18,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/games', \App\Http\Controllers\GameController::class);
-Route::get('/brands', \App\Http\Controllers\BrandController::class);
-Route::get('/countries', \App\Http\Controllers\CountryController::class);
-Route::get('/categories', \App\Http\Controllers\CategoryController::class);
-Route::get('/provider/{id}', \App\Http\Controllers\ProviderController::class);
+Route::group(['middleware' => ['cors']], function () {
+    Route::get('/games', \App\Http\Controllers\GameController::class);
+    Route::get('/brands', \App\Http\Controllers\BrandController::class);
+    Route::get('/countries', \App\Http\Controllers\CountryController::class);
+    Route::get('/categories', \App\Http\Controllers\CategoryController::class);
+    Route::get('/provider/{id}', \App\Http\Controllers\ProviderController::class);
+});
