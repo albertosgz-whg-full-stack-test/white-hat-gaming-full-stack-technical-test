@@ -2,11 +2,58 @@
 
   <nb-layout-header fixed>
 
+    <div class="header-container">
+      <app-select
+        [url]='"/api/brands"'
+        [itemSelected]="brand"
+        (itemSelectedChange)="onBrandSelected($event)"
+        [placeholder]='"Select Brand"'
+      ></app-select>
+      <app-select
+        [url]='"/api/countries"'
+        [itemSelected]="country"
+        (itemSelectedChange)="onCountrySelected($event)"
+        [placeholder]='"Select Country"'
+      ></app-select>
+      <app-select
+        [url]='"/api/categories"'
+        [itemSelected]="category"
+        (itemSelectedChange)="onCategorySelected($event)"
+        [clearable]="true"
+        [placeholder]='"Select Category"'
+        [selectFirst]='false'
+      ></app-select>
+    </div>
+
   </nb-layout-header>
 
   <nb-layout-column>
 
-    <router-outlet></router-outlet>
+    <!-- [infiniteScrollDistance]="9" -->
+    <!-- [infiniteScrollUpDistance]="1.5"
+    [infiniteScrollThrottle]="50" -->
+
+    <div
+      #itemsList
+      class="row"
+      infiniteScroll
+      [fromRoot]="true"
+      [infiniteScrollDisabled]="noMoreGamesAvailable"
+      (scrolled)="fetchMoreGames()"
+    >
+      <div
+        class="item"
+        *ngFor="let item of games$ | async"
+        (click)="onClickGame(item)"
+      >
+        <nb-card>
+          <nb-card-header>{{ item.name }}</nb-card-header>
+          <nb-card-body class="item-body">
+            <img class="item-img" [src]="imgSource(item)" lazy [alt]="item.name" loading="lazy">
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
 
   </nb-layout-column>
 

@@ -1,0 +1,50 @@
+<nb-card>
+  <nb-card-header>{{ game?.name }}</nb-card-header>
+  <nb-card-body class="card-body">
+    <div class="two-colums">
+      <div class="column">
+        <div class="row-info">
+          <label>Launchcode</label>
+          <strong>{{ game?.launchcode }}</strong>
+        </div>
+        <div class="row-info">
+          <label>Name</label>
+          <strong>{{ game?.name }}</strong>
+        </div>
+        <div
+          class="row-info"
+          [nbSpinner]="providerNameLoading" nbSpinnerSize="tiny"
+        >
+          <label>Provider</label>
+          <strong>
+            {{ providerName$ | async }}
+          </strong>
+        </div>
+        <div class="row-info">
+          <label>Brand</label>
+          <strong>{{ brand?.name }}</strong>
+        </div>
+        <div class="row-info" *ngIf="category">
+          <label>Category</label>
+          <strong>{{ category?.name }}</strong>
+        </div>
+            <div class="row-info">
+          <label>Hot?</label>
+          <strong>{{ game?.hot ? 'Yes' : 'No' }}</strong>
+        </div>
+        <div class="row-info">
+          <label>New?</label>
+          <strong>{{ game?.new ? 'Yes' : 'No' }}</strong>
+        </div>
+        <div class="row-info">
+          <label>RTP</label>
+          <strong>{{ game?.rtp }}</strong>
+        </div>
+      </div>
+      <div class="column centered">
+        <img *ngIf="imgSource" class="item-img" [src]="imgSource" [alt]="game?.name" loading="lazy">
+      </div>
+    </div>
+
+  </nb-card-body>
+</nb-card>

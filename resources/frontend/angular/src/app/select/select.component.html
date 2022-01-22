@@ -1,0 +1,24 @@
+<div class="select-container">
+  <ng-select
+    class="ng-select"
+    [multiple]="false"
+    [items]="items$ | async"
+    [(ngModel)]="itemSelected"
+    (change)="onChange($event)"
+    [clearable]="clearable"
+    [loading]="(loading | async) || false"
+    [typeahead]="searchTermInput$"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    bindLabel="name"
+    (scrollToEnd)="loadMore()"
+  >
+  <!-- bindValue="id" -->
+    <ng-template ng-footer-tmp>
+      <div class="footer-container">
+        <button nbButton (click)="loadMore()" [disabled]="loading | async">Load More</button>
+      </div>
+
+    </ng-template>
+  </ng-select>
+</div>

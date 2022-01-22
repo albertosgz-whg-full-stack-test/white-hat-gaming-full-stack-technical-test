@@ -1,0 +1,36 @@
+.card-body {
+  // min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .row-info {
+    min-width: 450px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 10px 0;
+    label {
+      width: 110px;
+    }
+  }
+  .two-colums {
+    width: 100%;
+    display: flex;
+    .column {
+      width: 50%;
+      &.centered {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          border-radius: 4px;
+          width: 260px;
+          height: auto;
+        }
+      }
+    }
+  }
+}
