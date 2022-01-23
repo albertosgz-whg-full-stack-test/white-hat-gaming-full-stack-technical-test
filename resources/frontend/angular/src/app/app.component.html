@@ -27,11 +27,7 @@
 
   </nb-layout-header>
 
-  <nb-layout-column>
-
-    <!-- [infiniteScrollDistance]="9" -->
-    <!-- [infiniteScrollUpDistance]="1.5"
-    [infiniteScrollThrottle]="50" -->
+  <nb-layout-column [nbSpinner]="loadingGames">
 
     <div
       #itemsList
@@ -39,7 +35,7 @@
       infiniteScroll
       [fromRoot]="true"
       [infiniteScrollDisabled]="noMoreGamesAvailable"
-      (scrolled)="fetchMoreGames()"
+      (scrolled)="fetchMoreGames(false)"
     >
       <div
         class="item"
@@ -47,12 +43,32 @@
         (click)="onClickGame(item)"
       >
         <nb-card>
-          <nb-card-header>{{ item.name }}</nb-card-header>
+          <nb-card-header>
+            <div class="item-header">
+              {{ item.name }}
+            </div>
+          </nb-card-header>
           <nb-card-body class="item-body">
-            <img class="item-img" [src]="imgSource(item)" lazy [alt]="item.name" loading="lazy">
+            <img
+              class="item-img"
+              [src]="errorImages[item.launchcode] || imgSource(item)"
+              [alt]="item.name"
+              loading="lazy"
+              (error)="onImgError(item)"
+            >
           </nb-card-body>
         </nb-card>
       </div>
+    </div>
+
+
+    <div class="list-footer">
+      <button
+        nbButton
+        status="primary"
+        [disabled]="!brand || !country || loadingGames"
+        (click)="fetchMoreGames(true)"
+      >Load More</button>
     </div>
 
   </nb-layout-column>

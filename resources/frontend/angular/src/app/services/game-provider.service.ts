@@ -19,7 +19,6 @@ export class GameProviderService {
   getProviderName(): Observable<string> {
     return this.providerId$.asObservable().pipe(
       filter(id => id > 0),
-      tap((id) => console.log('TAP', id)),
       tap(() => this.loading$.next(true)),
       switchMap(id => {
         let url = `http://localhost/api/provider/${id}`;

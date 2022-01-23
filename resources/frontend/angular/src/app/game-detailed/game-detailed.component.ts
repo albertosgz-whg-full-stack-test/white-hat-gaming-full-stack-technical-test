@@ -18,6 +18,7 @@ export class GameDetailedComponent implements OnInit, OnDestroy {
   providerNameLoading: boolean = true;
   providerName$: Observable<string>;
   private subs$: Subscription[] = [];
+  private errorImage = '';
 
   constructor(private providerService: GameProviderService) {
     this.providerName$ = this.providerService.getProviderName();
@@ -27,7 +28,11 @@ export class GameDetailedComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.providerService.setProviderId(this.game?.game_provider_id as number);
     this.subs$.push(
-      this.providerService.isLoading().subscribe(value => this.providerNameLoading = value)
+      this.providerService.isLoading().subscribe(value => {
+        setTimeout(() => {
+          this.providerNameLoading = value;
+        });
+      })
     );
   }
 
@@ -35,11 +40,18 @@ export class GameDetailedComponent implements OnInit, OnDestroy {
     this.subs$.forEach((sub$) => sub$.unsubscribe());
   }
 
-
   get imgSource(): string | undefined {
     if (this.game?.launchcode) {
-      return `https://stage.whgstage.com/scontent/images/games/${this.game?.launchcode}.jpg`;
+      return this.errorImage || `https://stage.whgstage.com/scontent/images/games/${this.game?.launchcode}.jpg`;
     }
     return undefined;
+  }
+
+  onImgError() {
+    setTimeout(() => {
+      // To avoid Error: NG0100: ExpressionChangedAfterItHasBeenCheckedError
+      this.errorImage = 'https://via.placeholder.com/260x164.png?text=Error+getting+image';
+    })
+
   }
 }

@@ -16,7 +16,7 @@
   <!-- bindValue="id" -->
     <ng-template ng-footer-tmp>
       <div class="footer-container">
-        <button nbButton (click)="loadMore()" [disabled]="loading | async">Load More</button>
+        <button nbButton (click)="loadMore(true)" [disabled]="loading | async">Load More</button>
       </div>
 
     </ng-template>

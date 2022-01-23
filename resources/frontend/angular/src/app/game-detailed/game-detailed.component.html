@@ -42,7 +42,14 @@
         </div>
       </div>
       <div class="column centered">
-        <img *ngIf="imgSource" class="item-img" [src]="imgSource" [alt]="game?.name" loading="lazy">
+        <img
+          *ngIf="imgSource"
+          class="item-img"
+          [src]="imgSource"
+          [alt]="game?.name"
+          loading="lazy"
+          (error)="onImgError()"
+        >
       </div>
     </div>
 

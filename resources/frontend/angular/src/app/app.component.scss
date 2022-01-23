@@ -6,7 +6,7 @@
 }
 
 .row {
-  height: calc(100% - 76px);
+  height: calc(100% - 100px);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -16,14 +16,28 @@
   .item {
     margin: 15px;
     cursor: pointer;
+    .item-header {
+      width: 212px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .item-body {
       --card-padding: 0px;
       .item-img {
         display: block;
         object-fit: cover;
-        width: 100%;
-        height: 100%;
+        width: 260px;
+        height: 164px;
       }
     }
   }
+}
+
+.list-footer {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

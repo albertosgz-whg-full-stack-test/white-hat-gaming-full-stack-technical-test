@@ -85,8 +85,8 @@ export class SelectComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription$.forEach(sub$ => sub$.unsubscribe());
   }
 
-  loadMore() {
-    if (!this.noMoreFiltersAvailable) {
+  loadMore(forceFetch?: boolean) {
+    if (forceFetch || !this.noMoreFiltersAvailable) {
       this.filters.fetchNextPage();
     }
   }
