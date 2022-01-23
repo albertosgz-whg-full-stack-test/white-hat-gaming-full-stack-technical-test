@@ -64,7 +64,7 @@ export class SelectComponent implements OnInit, OnChanges, OnDestroy {
       }),
       tap(items => {
         if (!this.setupInitialValue && this.selectFirst) {
-          this.onChange(items[0]);
+          this.onSelectChange(items[0]);
         }
         this.setupInitialValue = true;
       })
@@ -72,7 +72,7 @@ export class SelectComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!!this.url) {
+    if (!!changes['url']) {
       this.filters.setUrl(this.url);
     }
   }
@@ -91,7 +91,7 @@ export class SelectComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  onChange(value: SelectOption) {
+  onSelectChange(value: SelectOption) {
 
     // Get initial list again once an option is selected
     this.filters.setFilter('');

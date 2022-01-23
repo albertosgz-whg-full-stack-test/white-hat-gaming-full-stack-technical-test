@@ -4,7 +4,7 @@
     [multiple]="false"
     [items]="items$ | async"
     [(ngModel)]="itemSelected"
-    (change)="onChange($event)"
+    (change)="onSelectChange($event)"
     [clearable]="clearable"
     [loading]="(loading | async) || false"
     [typeahead]="searchTermInput$"
