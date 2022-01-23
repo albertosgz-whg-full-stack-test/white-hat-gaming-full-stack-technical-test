@@ -14,7 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   brand: FilterOption|undefined = undefined;
   country: FilterOption|undefined = undefined;
   category: FilterOption|undefined = undefined;
-  games$: Observable<GameData[]>;
+  games: GameData[] = [];
   noMoreGamesAvailable = false;
   errorImages: { [launchcode: string]: string } = {};
   loadingGames = true;
@@ -26,28 +26,29 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private gamesService: GamesService,
     private dialogService: NbDialogService,
-  ) {
-    this.games$ = gamesService.games.pipe(
-      tap((games) => {
-        this.noMoreGamesAvailable = games.length === this.currentAmountOfGames;
-        this.currentAmountOfGames = games.length;
-      }),
-      tap(() => {
-        setTimeout(() => {
-          // Keep downloading games until scroll shows up
-          const nativeElement = this.itemsList.nativeElement;
-          if (nativeElement.scrollHeight <= nativeElement.clientHeight) {
-            this.fetchMoreGames(false);
-          }
-        })
-      }),
-    );
-  }
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions$.push(
       this.gamesService.isLoading().subscribe(loading => this.loadingGames = loading)
     );
+    this.subscriptions$.push(
+      this.gamesService.games.pipe(
+        tap((games) => {
+          this.noMoreGamesAvailable = games.length === this.currentAmountOfGames;
+          this.currentAmountOfGames = games.length;
+        }),
+        tap(() => {
+          setTimeout(() => {
+            // Keep downloading games until scroll shows up
+            const nativeElement = this.itemsList?.nativeElement;
+            if (nativeElement && nativeElement.scrollHeight <= nativeElement.clientHeight) {
+              this.fetchMoreGames(false);
+            }
+          })
+        }),
+      ).subscribe(games => this.games = games)
+    )
   }
 
   ngOnDestroy(): void {

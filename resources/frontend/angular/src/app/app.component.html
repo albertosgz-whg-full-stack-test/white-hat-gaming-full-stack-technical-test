@@ -35,6 +35,7 @@
     <div
       #itemsList
       class="row"
+      *ngIf="games.length > 0; else noGamesTemplate"
       infiniteScroll
       [fromRoot]="true"
       [infiniteScrollDisabled]="noMoreGamesAvailable"
@@ -42,7 +43,7 @@
     >
       <div
         class="item"
-        *ngFor="let item of games$ | async"
+        *ngFor="let item of games"
         (click)="onClickGame(item)"
       >
         <nb-card>
@@ -69,7 +70,7 @@
       <button
         nbButton
         status="primary"
-        [disabled]="!brand || !country || loadingGames"
+        [disabled]="!brand || !country || loadingGames || games.length === 0"
         (click)="fetchMoreGames(true)"
       >Load More</button>
     </div>
@@ -81,3 +82,7 @@
   </nb-layout-footer>
 
 </nb-layout>
+
+<ng-template #noGamesTemplate>
+  <div *ngIf="!loadingGames" class="row centered">No games found for combination selected.</div>
+</ng-template>

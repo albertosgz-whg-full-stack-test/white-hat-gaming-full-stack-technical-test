@@ -32,6 +32,10 @@
       }
     }
   }
+  &.centered {
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .list-footer {
