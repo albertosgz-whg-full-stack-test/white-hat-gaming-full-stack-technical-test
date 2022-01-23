@@ -8,12 +8,14 @@
         [itemSelected]="brand"
         (itemSelectedChange)="onBrandSelected($event)"
         [placeholder]='"Select Brand"'
+        [disabled]="loadingGames"
       ></app-select>
       <app-select
         [url]='"/api/countries"'
         [itemSelected]="country"
         (itemSelectedChange)="onCountrySelected($event)"
         [placeholder]='"Select Country"'
+        [disabled]="loadingGames"
       ></app-select>
       <app-select
         [url]='"/api/categories"'
@@ -22,6 +24,7 @@
         [clearable]="true"
         [placeholder]='"Select Category"'
         [selectFirst]='false'
+        [disabled]="loadingGames"
       ></app-select>
     </div>
 
