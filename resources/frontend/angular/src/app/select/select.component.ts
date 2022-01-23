@@ -1,4 +1,4 @@
-import { Observable, Subject, Subscription, distinctUntilChanged, filter, of, tap } from 'rxjs';
+import { Observable, Subject, Subscription, debounce, debounceTime, distinctUntilChanged, filter, of, tap } from 'rxjs';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FiltersService } from '../services/filters.service';
 
@@ -40,6 +40,7 @@ export class SelectComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription$.push(
       this.searchTermInput$
       .pipe(
+        debounceTime(250),
         distinctUntilChanged(),
         filter(term => term !== null),
       )
