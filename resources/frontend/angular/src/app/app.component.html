@@ -33,7 +33,7 @@
   <nb-layout-column [nbSpinner]="loadingGames">
 
     <div
-      #itemsList
+      id="itemsList"
       class="row"
       *ngIf="games.length > 0; else noGamesTemplate"
       infiniteScroll

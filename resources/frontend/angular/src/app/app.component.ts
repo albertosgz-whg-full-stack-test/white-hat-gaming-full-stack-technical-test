@@ -21,8 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private currentAmountOfGames = 0;
   private subscriptions$: Subscription[] = [];
 
-  @ViewChild('itemsList', {static: true}) itemsList: any;
-
   constructor(
     private gamesService: GamesService,
     private dialogService: NbDialogService,
@@ -41,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
         tap(() => {
           setTimeout(() => {
             // Keep downloading games until scroll shows up
-            const nativeElement = this.itemsList?.nativeElement;
+            const nativeElement = document.getElementById('itemsList');
             if (nativeElement && nativeElement.scrollHeight <= nativeElement.clientHeight) {
               this.fetchMoreGames(false);
             }
