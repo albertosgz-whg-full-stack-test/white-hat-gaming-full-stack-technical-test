@@ -26,6 +26,9 @@ class GameController extends Controller
         if (!$brandId) {
             throw new \Exception('Missing brand field');
         }
+        if (!is_numeric($brandId)) {
+            throw new \Exception('Unexpected Brand value type (must be numeric)');
+        }
         if (!$countryId) {
             throw new \Exception('Missing country field');
         }
