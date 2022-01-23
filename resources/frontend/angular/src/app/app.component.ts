@@ -1,5 +1,5 @@
-import { Observable, Subscription, lastValueFrom, tap } from 'rxjs';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription, tap } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { GameDetailedComponent } from './game-detailed/game-detailed.component';
 import { FilterOption } from './services/filters.service';

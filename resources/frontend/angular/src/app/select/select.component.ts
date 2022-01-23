@@ -1,13 +1,5 @@
 import { Observable, Subject, Subscription, distinctUntilChanged, filter, of, tap } from 'rxjs';
-import {
-  HttpClient,
-  HttpEvent,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse
-} from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { FiltersService } from '../services/filters.service';
 
 export interface SelectOption {

@@ -1,4 +1,4 @@
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FilterOption } from '../services/filters.service';
 import { GameProviderService } from '../services/game-provider.service';
