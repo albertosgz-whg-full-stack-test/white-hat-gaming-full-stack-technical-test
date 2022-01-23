@@ -11,14 +11,9 @@
           <label>Name</label>
           <strong>{{ game?.name }}</strong>
         </div>
-        <div
-          class="row-info"
-          [nbSpinner]="providerNameLoading" nbSpinnerSize="tiny"
-        >
+        <div class="row-info">
           <label>Provider</label>
-          <strong>
-            {{ providerName$ | async }}
-          </strong>
+            <div class="min-value-row strong" [nbSpinner]="providerNameLoading" nbSpinnerSize="tiny">{{ (providerName$ | async) || '&nbsp;'}}</div>
         </div>
         <div class="row-info">
           <label>Brand</label>
